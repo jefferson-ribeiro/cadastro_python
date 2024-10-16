@@ -55,8 +55,7 @@ while True:
     
     if opcao == '1':
         # Título para a seção de cadastro de clientes
-        print('═══════════ CADASTRO DE CLIENTES ═══════════')
-        
+        print('═══════════ CADASTRO DE CLIENTES ═══════════')     
         while True:
             cliente = []  # Lista para armazenar informações de um cliente 
             # Gera um código de cliente sequencial
@@ -66,11 +65,11 @@ while True:
             cliente.append(cod_cliente)
             nome = str(input('Informe o nome completo do cliente: '))
             cliente.append(nome)
-            cel = str(input(f'Informe o número de celular do cliente {nome}: '))
+            cel = str(input(f'Informe o número de celular do cliente [{nome}]: '))
             cliente.append(cel)
-            cpf = str(input(f'Informe o CPF do cliente {nome}: '))
+            cpf = str(input(f'Informe o CPF do cliente [{nome}]: '))
             cliente.append(cpf)
-            email = str(input(f'Informe o email do cliente: '))
+            email = str(input(f'Informe o email do cliente [{nome}]: '))
             cliente.append(email)
             # Adiciona o cliente à lista de clientes
             clientes.append(cliente)
@@ -79,8 +78,27 @@ while True:
             if continuar != 's':
                 break
     elif opcao == '2':
-        # Título para a seção de cadastro de clientes
+        # Título para a seção de cadastro de produtos
         print('═══════════ CADASTRO DE PRODUTOS ═══════════')
+        while True:
+            produto = []  # Lista para armazenar informações de um produto 
+            # Gera um código de produto sequencial
+            cod_produto = len(produtos) + 1
+            print(f'\nCadastro do produto [{cod_produto}]')
+            # Coleta informações do produto
+            produto.append(cod_produto)
+            nome_produto = str(input('Informe o nome do produto: '))
+            produto.append(nome_produto)
+            descricao = str(input(f'Informe uma breve descrição para o produto [{nome_produto}]: '))
+            produto.append(descricao)
+            valor = str(input(f'Informe o valor do produto [{nome_produto}] R$:'))
+            produto.append(valor)
+            # Adiciona o produto à lista de proddutos
+            produtos.append(produto)
+            # Pergunta se deseja continuar cadastrando mais produtos
+            continuar = str(input('Deseja cadastrar outro produto? (s/n): ')).lower()
+            if continuar != 's':
+                break
     elif opcao == '3':
         # Título para a seção de cadastro de clientes
         print('═══════════ REALIZAR PEDIDO ═══════════')
@@ -96,7 +114,13 @@ while True:
             print('-------------------------------------')
     elif opcao == '5':
         # Título para a seção de cadastro de clientes
-        print('═══════════ PRODUTOS CADASTRADOS ═══════════')    
+        print('═══════════ PRODUTOS CADASTRADOS ═══════════')
+        for produto in produtos:
+            print(f'COD: {produto[0]}')
+            print(f'PRODUTO: {produto[1]}')
+            print(f'DESCRIÇÃO: {produto[2]}')
+            print(f'VALOR: R${produto[3]}')
+            print('-------------------------------------')   
     elif opcao == '6':
         # Título para a seção de cadastro de clientes
         print('═══════════ PEDIDOS CADASTRADOS ═══════════')
