@@ -102,8 +102,39 @@ while True:
     elif opcao == '3':
         # Título para a seção de cadastro de clientes
         print('═══════════ REALIZAR PEDIDO ═══════════')
+        
+        while True:
+            pedido = []  # Lista para armazenar informações de um pedido 
+            # Gera um código de pedido sequencial
+            num_pedido = len(pedidos) + 1
+            print(f'\nCadastro do pedido [{num_pedido}]')
+            # Coleta informações do pedido
+            pedido.append(num_pedido)
+            
+            print('══════════════════════ Clientes: ')
+            for cliente in clientes:
+                print(f'COD: {cliente[0]}')
+                print(f'CLIENTE: {cliente[1]}')
+            cod_cliente_pd = int(input(f'Informe o código cliente para o pedido {num_pedido}: '))
+            pedido.append(cod_cliente_pd)
+            print('-------------------------------------') 
+            
+            print('══════════════════════ Produtos: ')
+            for produto in produtos:
+                print(f'COD: {produto[0]}')
+                print(f'PRODUTO: {produto[1]}')
+            cod_produto_pd = int(input(f'Informe o código cliente para o pedido {num_pedido}: '))
+            pedido.append(cod_produto_pd)
+            print('-------------------------------------') 
+            
+            # Adiciona o pedido à lista de pedidos
+            pedidos.append(pedido)
+            # Pergunta se deseja continuar cadastrando mais produtos
+            continuar = str(input('Deseja cadastrar outro pedido? (s/n): ')).lower()
+            if continuar != 's':
+                break  
     elif opcao == '4':
-        # Título para a seção de cadastro de clientes
+        # Título para a seção de clientes cadastrados
         print('═══════════ CLIENTES CADASTRADOS ═══════════')
         for cliente in clientes:
             print(f'COD: {cliente[0]}')
@@ -113,7 +144,7 @@ while True:
             print(f'EMAIL: {cliente[4]}')
             print('-------------------------------------')
     elif opcao == '5':
-        # Título para a seção de cadastro de clientes
+        # Título para a seção produtos cadastrados
         print('═══════════ PRODUTOS CADASTRADOS ═══════════')
         for produto in produtos:
             print(f'COD: {produto[0]}')
@@ -122,8 +153,15 @@ while True:
             print(f'VALOR: R${produto[3]}')
             print('-------------------------------------')   
     elif opcao == '6':
-        # Título para a seção de cadastro de clientes
+        # Título para a seção de pedidos cadastrados
         print('═══════════ PEDIDOS CADASTRADOS ═══════════')
+        for pedido in pedidos:
+            cliente = [cli for cli in clientes if cli[0] == pedido[1]][0]
+            produto = [prod for prod in produtos if prod[0] == pedido[2]][0]
+            print(f'Pedido Número: {pedido[0]}')
+            print(f'Nome: {cliente[1]}')
+            print(f'Produto: {produto[1]}')
+            print('-------------------------------------')
     elif opcao == '0':
         print('Saindo do sistema. Até mais!')
         break
