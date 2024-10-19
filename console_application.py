@@ -115,20 +115,40 @@ while True:
             for cliente in clientes:
                 print(f'COD: {cliente[0]}')
                 print(f'CLIENTE: {cliente[1]}')
+                print('-------------------------------------')
+            
             cod_cliente_pd = int(input(f'Informe o código cliente para o pedido {num_pedido}: '))
-            pedido.append(cod_cliente_pd)
-            print('-------------------------------------') 
+            cliente_selecionado = None
+            for cli in clientes:
+                if cli[0] == cod_cliente_pd:
+                    cliente_selecionado = cli
+                    break
+            if cliente_selecionado:
+                pedido.append(cliente_selecionado)
+            else:
+                print('Cliente não encontrado.')
+                print('-------------------------------------')
             
             print('══════════════════════ Produtos: ')
             for produto in produtos:
                 print(f'COD: {produto[0]}')
                 print(f'PRODUTO: {produto[1]}')
+            print('-------------------------------------')     
             cod_produto_pd = int(input(f'Informe o código do produto para o pedido {num_pedido}: '))
-            qtd_produto_pd = int(input(f'Informe a quantidade do produto {cod_produto_pd} para o pedido {num_pedido}: '))
-            pedido.append(cod_produto_pd)
-            pedido.append(qtd_produto_pd)
-            print('-------------------------------------') 
-            
+            # Usando um loop para encontrar o produto
+            produto_selecionado = None
+            for prod in produtos:
+                if prod[0] == cod_produto_pd:
+                    produto_selecionado = prod
+                    break
+            if produto_selecionado:
+                qtd_produto_pd = int(input(f'Informe a quantidade do produto {produto_selecionado[1]} para o pedido {num_pedido}: '))
+                pedido.append(qtd_produto_pd)
+                pedido.append(produto_selecionado)
+            else:
+                print('Produto não encontrado.')
+                print('-------------------------------------')
+                
             # Adiciona o pedido à lista de pedidos
             pedidos.append(pedido)
             # Pergunta se deseja continuar cadastrando mais produtos
@@ -158,12 +178,16 @@ while True:
         # Título para a seção de pedidos cadastrados
         print('═══════════ PEDIDOS CADASTRADOS ═══════════')
         for pedido in pedidos:
-            cliente = [cli for cli in clientes if cli[0] == pedido[1]][0]
-            produto = [prod for prod in produtos if prod[0] == pedido[2]][0]
-            print(f'Pedido Número: {pedido[0]}')
-            print(f'Nome: {cliente[1]}')
-            print(f'Qtd:{pedido[3]}..........Produto: {produto[1]}')
-            print(f'Preço Unitário: R${produto[3]:.2f} Total: R${pedido[3] * produto[3]:.2f}')
+            # pedido: [1, [1, 'Jefferson', '1197436', '297','jef@gmail'], 2, [1, 'mouse', 'gamer', 50.0]]
+            num_ped = pedido[0] # Número do pedido
+            nom_cliente = pedido[1][1] # Nome do cliente
+            nom_prod_ped = pedido[3][1] # Nome do produto
+            qtd_prod_ped = pedido[2] # Quantidade de produto
+            vlr_prod_ped_uni = pedido[3][3] # Valor unitário do produto
+            vlr_prod_ped_tot = pedido[2] * pedido[3][3] # Valor total do produto
+            print(f'Pedido Número: {num_ped}')
+            print(f'Nome: {nom_cliente}')
+            print(f'Qtd{qtd_prod_ped}-{nom_prod_ped}-R${vlr_prod_ped_uni:.2f}.....Total: R${vlr_prod_ped_tot:.2f}')
             print('-------------------------------------')
     elif opcao == '0':
         print('Saindo do sistema. Até mais!')
