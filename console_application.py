@@ -91,7 +91,7 @@ while True:
             produto.append(nome_produto)
             descricao = str(input(f'Informe uma breve descrição para o produto [{nome_produto}]: '))
             produto.append(descricao)
-            valor = str(input(f'Informe o valor do produto [{nome_produto}] R$:'))
+            valor = float(input(f'Informe o valor do produto [{nome_produto}] R$:'))
             produto.append(valor)
             # Adiciona o produto à lista de proddutos
             produtos.append(produto)
@@ -123,8 +123,10 @@ while True:
             for produto in produtos:
                 print(f'COD: {produto[0]}')
                 print(f'PRODUTO: {produto[1]}')
-            cod_produto_pd = int(input(f'Informe o código cliente para o pedido {num_pedido}: '))
+            cod_produto_pd = int(input(f'Informe o código do produto para o pedido {num_pedido}: '))
+            qtd_produto_pd = int(input(f'Informe a quantidade do produto {cod_produto_pd} para o pedido {num_pedido}: '))
             pedido.append(cod_produto_pd)
+            pedido.append(qtd_produto_pd)
             print('-------------------------------------') 
             
             # Adiciona o pedido à lista de pedidos
@@ -160,7 +162,8 @@ while True:
             produto = [prod for prod in produtos if prod[0] == pedido[2]][0]
             print(f'Pedido Número: {pedido[0]}')
             print(f'Nome: {cliente[1]}')
-            print(f'Produto: {produto[1]}')
+            print(f'Qtd:{pedido[3]}..........Produto: {produto[1]}')
+            print(f'Preço Unitário: R${produto[3]:.2f} Total: R${pedido[3] * produto[3]:.2f}')
             print('-------------------------------------')
     elif opcao == '0':
         print('Saindo do sistema. Até mais!')
