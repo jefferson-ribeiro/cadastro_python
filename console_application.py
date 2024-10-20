@@ -133,25 +133,32 @@ while True:
             for produto in produtos:
                 print(f'COD: {produto[0]}')
                 print(f'PRODUTO: {produto[1]}')
-            print('-------------------------------------')     
-            cod_produto_pd = int(input(f'Informe o código do produto para o pedido {num_pedido}: '))
-            # Usando um loop para encontrar o produto
-            produto_selecionado = None
-            for prod in produtos:
-                if prod[0] == cod_produto_pd:
-                    produto_selecionado = prod
-                    break
-            if produto_selecionado:
-                qtd_produto_pd = int(input(f'Informe a quantidade do produto {produto_selecionado[1]} para o pedido {num_pedido}: '))
-                pedido.append(qtd_produto_pd)
-                pedido.append(produto_selecionado)
-            else:
-                print('Produto não encontrado.')
-                print('-------------------------------------')
-                
+            print('-------------------------------------')
+            produtos_ped = []
+            while True:     
+                cod_produto_pd = int(input(f'Informe o código do produto para o pedido {num_pedido}: '))
+                # Usando um loop para encontrar o produto
+                produto_selecionado = None
+                for prod in produtos:
+                    if prod[0] == cod_produto_pd:
+                        produto_selecionado = prod
+                        break
+                if produto_selecionado:
+                    qtd_produto_pd = int(input(f'Informe a quantidade do produto {produto_selecionado[1]} para o pedido {num_pedido}: '))
+                    produto_selecionado.append(qtd_produto_pd)
+                    produtos_ped.append(produto_selecionado)
+                else:
+                    print('Produto não encontrado.')
+                    print('-------------------------------------')
+                # Pergunta se deseja continuar cadastrando mais produtos
+                continuar = str(input('Deseja cadastrar outro produto? (s/n): ')).lower()
+                if continuar != 's':
+                    break      
+            # Adiciona os produtos ao pedido
+            pedido.append(produtos_ped)
             # Adiciona o pedido à lista de pedidos
             pedidos.append(pedido)
-            # Pergunta se deseja continuar cadastrando mais produtos
+            # Pergunta se deseja cadastrar um novo pedido
             continuar = str(input('Deseja cadastrar outro pedido? (s/n): ')).lower()
             if continuar != 's':
                 break  
@@ -178,16 +185,26 @@ while True:
         # Título para a seção de pedidos cadastrados
         print('═══════════ PEDIDOS CADASTRADOS ═══════════')
         for pedido in pedidos:
-            # pedido: [1, [1, 'Jefferson', '1197436', '297','jef@gmail'], 2, [1, 'mouse', 'gamer', 50.0]]
+            # pedido: pedido: [1, [1, 'jefferson', '1197436', '297', 'jef@gmail'], [[2, 'teclado', 'mecanico', 102.78, 2], [1, 'mouse', 'gamer', 50.36, 3]]]
             num_ped = pedido[0] # Número do pedido
             nom_cliente = pedido[1][1] # Nome do cliente
-            nom_prod_ped = pedido[3][1] # Nome do produto
-            qtd_prod_ped = pedido[2] # Quantidade de produto
-            vlr_prod_ped_uni = pedido[3][3] # Valor unitário do produto
-            vlr_prod_ped_tot = pedido[2] * pedido[3][3] # Valor total do produto
+            
             print(f'Pedido Número: {num_ped}')
             print(f'Nome: {nom_cliente}')
-            print(f'Qtd{qtd_prod_ped}-{nom_prod_ped}-R${vlr_prod_ped_uni:.2f}.....Total: R${vlr_prod_ped_tot:.2f}')
+            
+            # lista_prod = [[2, 'teclado', 'mecanico', 102.78, 2], 
+            # [1, 'mouse', 'gamer', 50.36, 3]]
+            
+            lista_prod = pedido[2]
+            total_ped = 0
+            for prod in lista_prod:
+                nom_prod_ped = prod[1] # Nome do produto
+                vlr_prod_ped_uni = prod[3] # Valor unitário do produto
+                qtd_prod_ped = prod[4] # Quantidade de produto
+                total_prod = qtd_prod_ped * vlr_prod_ped_uni # Valor total do produto
+                print(f'Qtd {qtd_prod_ped} - {nom_prod_ped} - R$ {vlr_prod_ped_uni:.2f}.....R$ {total_prod:.2f}')
+                total_ped += total_prod
+            print(f'Valor Total..................R$ {total_ped:.2f}')
             print('-------------------------------------')
     elif opcao == '0':
         print('Saindo do sistema. Até mais!')
