@@ -116,7 +116,6 @@ while True:
                 print(f'COD: {cliente[0]}')
                 print(f'CLIENTE: {cliente[1]}')
                 print('-------------------------------------')
-            
             cod_cliente_pd = int(input(f'Informe o código cliente para o pedido {num_pedido}: '))
             cliente_selecionado = None
             for cli in clientes:
@@ -128,7 +127,7 @@ while True:
             else:
                 print('Cliente não encontrado.')
                 print('-------------------------------------')
-            
+                
             print('══════════════════════ Produtos: ')
             for produto in produtos:
                 print(f'COD: {produto[0]}')
@@ -185,17 +184,11 @@ while True:
         # Título para a seção de pedidos cadastrados
         print('═══════════ PEDIDOS CADASTRADOS ═══════════')
         for pedido in pedidos:
-            # pedido: pedido: [1, [1, 'jefferson', '1197436', '297', 'jef@gmail'], [[2, 'teclado', 'mecanico', 102.78, 2], [1, 'mouse', 'gamer', 50.36, 3]]]
             num_ped = pedido[0] # Número do pedido
-            nom_cliente = pedido[1][1] # Nome do cliente
-            
-            print(f'Pedido Número: {num_ped}')
-            print(f'Nome: {nom_cliente}')
-            
-            # lista_prod = [[2, 'teclado', 'mecanico', 102.78, 2], 
-            # [1, 'mouse', 'gamer', 50.36, 3]]
-            
+            nom_cliente = pedido[1][1] # Nome do cliente        
             lista_prod = pedido[2]
+            print(f'Pedido Número: {num_ped}')
+            print(f'Nome: {nom_cliente}')    
             total_ped = 0
             for prod in lista_prod:
                 nom_prod_ped = prod[1] # Nome do produto
