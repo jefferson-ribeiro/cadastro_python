@@ -1,5 +1,4 @@
 import time
-import models as m
 
 # Inicializa as listas para armazenar dados
 clientes = []
@@ -28,18 +27,21 @@ def menu():
         
 def cadastrar_cliente():
     while True:
+        cliente = []  # Lista para armazenar informações de um cliente 
         # Gera um código de cliente sequencial
         cod_cliente = len(clientes) + 1
         print(f'\nCadastro do Cliente {cod_cliente}')
         # Coleta informações do cliente
+        cliente.append(cod_cliente)
         nome = str(input('Informe o nome completo do cliente: '))
+        cliente.append(nome)
         cel = str(input(f'Informe o número de celular do cliente [{nome}]: '))
+        cliente.append(cel)
         cpf = str(input(f'Informe o CPF do cliente [{nome}]: '))
+        cliente.append(cpf)
         email = str(input(f'Informe o email do cliente [{nome}]: '))
-        # Cria instancia cliente
-        cliente = m.Cliente(cod_cliente, nome, cel, cpf, email)
-        print(cliente)
-        # Adiciona instancia Cliente à lista de clientes
+        cliente.append(email)
+        # Adiciona o cliente à lista de clientes
         clientes.append(cliente)
         # Pergunta se deseja continuar cadastrando mais clientes
         continuar = str(input('Deseja cadastrar outro cliente? (s/n): ')).lower()
@@ -128,15 +130,12 @@ def cadastrar_pedido():
             break  
 
 def mostrar_clientes():
-    if not clientes:
-        print('Nenhum cliente cadastrado.')
-        cadastrar_cliente()
     for cliente in clientes:
-        print(f'COD: {cliente.codigo}')
-        print(f'CLIENTE: {cliente.nome}')
-        print(f'CELULAR: {cliente.telefone}')
-        print(f'CPF: {cliente.cpf}')
-        print(f'EMAIL: {cliente.email}')
+        print(f'COD: {cliente[0]}')
+        print(f'CLIENTE: {cliente[1]}')
+        print(f'CELULAR: {cliente[2]}')
+        print(f'CPF: {cliente[3]}')
+        print(f'EMAIL: {cliente[4]}')
         print('-------------------------------------')
     
 def mostrar_produtos():
