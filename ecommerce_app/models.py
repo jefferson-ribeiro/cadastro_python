@@ -14,9 +14,14 @@ class Produto:
         self.valor = valor
 
 class Pedido:
-    def __init__(self, codigo, cliente, produto, quantidade):
+    def __init__(self, codigo, cliente, produtos):
         self.codigo = codigo
         self.cliente = cliente
-        self.produto = produto
-        self.quantidade = quantidade
-        self.valor_total = self.quantidade * self.produto.valor
+        self.produtos = produtos  # Lista de tuplas (produto, quantidade)
+        self.valor_total = self.calcular_valor_total()
+
+    def calcular_valor_total(self):
+        total = 0
+        for produto, quantidade in self.produtos:
+            total += produto.valor * quantidade
+        return

@@ -36,9 +36,8 @@ def cadastrar_cliente():
         cel = str(input(f'Informe o número de celular do cliente [{nome}]: '))
         cpf = str(input(f'Informe o CPF do cliente [{nome}]: '))
         email = str(input(f'Informe o email do cliente [{nome}]: '))
-        # Cria instancia cliente
+        # Cria instancia Cliente
         cliente = m.Cliente(cod_cliente, nome, cel, cpf, email)
-        print(cliente)
         # Adiciona instancia Cliente à lista de clientes
         clientes.append(cliente)
         # Pergunta se deseja continuar cadastrando mais clientes
@@ -48,84 +47,85 @@ def cadastrar_cliente():
     
 def cadastrar_produto():
     while True:
-        produto = []  # Lista para armazenar informações de um produto 
         # Gera um código de produto sequencial
         cod_produto = len(produtos) + 1
         print(f'\nCadastro do produto [{cod_produto}]')
         # Coleta informações do produto
-        produto.append(cod_produto)
         nome_produto = str(input('Informe o nome do produto: '))
-        produto.append(nome_produto)
         descricao = str(input(f'Informe uma breve descrição para o produto [{nome_produto}]: '))
-        produto.append(descricao)
         valor = float(input(f'Informe o valor do produto [{nome_produto}] R$:'))
-        produto.append(valor)
+        # Cria instancia Produto
+        produto = m.Produto(cod_produto,nome_produto,descricao,valor)
         # Adiciona o produto à lista de proddutos
         produtos.append(produto)
         # Pergunta se deseja continuar cadastrando mais produtos
         continuar = str(input('Deseja cadastrar outro produto? (s/n): ')).lower()
         if continuar != 's':
             break
-        
+
 def cadastrar_pedido():
     while True:
-        pedido = []  # Lista para armazenar informações de um pedido 
         # Gera um código de pedido sequencial
         num_pedido = len(pedidos) + 1
         print(f'\nCadastro do pedido [{num_pedido}]')
         # Coleta informações do pedido
-        pedido.append(num_pedido)
         
+        # Mostra os clientes disponiveis
         print('══════════════════════ Clientes: ')
-        for cliente in clientes:
-            print(f'COD: {cliente[0]}')
-            print(f'CLIENTE: {cliente[1]}')
-            print('-------------------------------------')
+        mostrar_clientes()
+        # Captura código do cliente do pedido
         cod_cliente_pd = int(input(f'Informe o código cliente para o pedido {num_pedido}: '))
+        # cria variavel para receber o cliente do pedido
         cliente_selecionado = None
+        # procura o cliente selecionado na lista de clientes
         for cli in clientes:
-            if cli[0] == cod_cliente_pd:
+            if cli.codigo == cod_cliente_pd:
                 cliente_selecionado = cli
                 break
         if cliente_selecionado:
-            pedido.append(cliente_selecionado)
+            print(f'Cliente {cliente_selecionado.nome} selecionado')
         else:
             print('Cliente não encontrado.')
             print('-------------------------------------')
-            
+        
+        # Mostra os produtos disponiveis
         print('══════════════════════ Produtos: ')
-        for produto in produtos:
-            print(f'COD: {produto[0]}')
-            print(f'PRODUTO: {produto[1]}')
-        print('-------------------------------------')
+        mostrar_produtos()
+        # cria lista para armazenar os produtos para o pedido
         produtos_ped = []
-        while True:     
+        while True:
+            # Captura código do produto do pedido
             cod_produto_pd = int(input(f'Informe o código do produto para o pedido {num_pedido}: '))
-            # Usando um loop para encontrar o produto
             produto_selecionado = None
             for prod in produtos:
-                if prod[0] == cod_produto_pd:
+                if prod.codigo == cod_produto_pd:
                     produto_selecionado = prod
                     break
+            
             if produto_selecionado:
-                qtd_produto_pd = int(input(f'Informe a quantidade do produto {produto_selecionado[1]} para o pedido {num_pedido}: '))
-                produto_selecionado.append(qtd_produto_pd)
-                produtos_ped.append(produto_selecionado)
+                # Captura a quantidade de produto que será adquirida
+                qtd_produto_pd = int(input(f'Informe a quantidade do produto {produto_selecionado.nome} para o pedido {num_pedido}: '))
+                # Adiciona o produto e a quantidade como uma tupla na lista de produtos do pedido
+                produtos_ped.append((produto_selecionado, qtd_produto_pd))
             else:
                 print('Produto não encontrado.')
                 print('-------------------------------------')
+
             # Pergunta se deseja continuar cadastrando mais produtos
             continuar = str(input('Deseja cadastrar outro produto? (s/n): ')).lower()
             if continuar != 's':
-                break      
-        # Adiciona os produtos ao pedido
-        pedido.append(produtos_ped)
+                break
+
+        # Cria a instância do Pedido
+        pedido = m.Pedido(num_pedido, cliente_selecionado, produtos_ped)
         # Adiciona o pedido à lista de pedidos
         pedidos.append(pedido)
+        print(f'Pedido {num_pedido} cadastrado com sucesso.')
+
         # Pergunta se deseja cadastrar um novo pedido
         continuar = str(input('Deseja cadastrar outro pedido? (s/n): ')).lower()
         if continuar != 's':
-            break  
+            break
 
 def mostrar_clientes():
     if not clientes:
@@ -140,27 +140,31 @@ def mostrar_clientes():
         print('-------------------------------------')
     
 def mostrar_produtos():
+    if not produtos:
+        print('Nenhum produto cadastrado.')
+        cadastrar_produto()
     for produto in produtos:
-        print(f'COD: {produto[0]}')
-        print(f'PRODUTO: {produto[1]}')
-        print(f'DESCRIÇÃO: {produto[2]}')
-        print(f'VALOR: R${produto[3]}')
+        print(f'COD: {produto.codigo}')
+        print(f'PRODUTO: {produto.nome}')
+        print(f'DESCRIÇÃO: {produto.descricao}')
+        print(f'VALOR: R${produto.valor:.2f}')
         print('-------------------------------------')
     
 def mostrar_pedidos():
+    if not pedidos:
+        print('Nenhum pedido cadastrado.')
+        cadastrar_pedido()
+    
     for pedido in pedidos:
-        num_ped = pedido[0] # Número do pedido
-        nom_cliente = pedido[1][1] # Nome do cliente        
-        lista_prod = pedido[2]
-        print(f'Pedido Número: {num_ped}')
-        print(f'Nome: {nom_cliente}')    
+        print(f'Pedido Número: {pedido.codigo}')
+        print(f'Cliente: {pedido.cliente.nome}')
+        
         total_ped = 0
-        for prod in lista_prod:
-            nom_prod_ped = prod[1] # Nome do produto
-            vlr_prod_ped_uni = prod[3] # Valor unitário do produto
-            qtd_prod_ped = prod[4] # Quantidade de produto
-            total_prod = qtd_prod_ped * vlr_prod_ped_uni # Valor total do produto
-            print(f'Qtd {qtd_prod_ped} - {nom_prod_ped} - R$ {vlr_prod_ped_uni:.2f}.....R$ {total_prod:.2f}')
+        for produto, quantidade in pedido.produtos:
+            total_prod = quantidade * produto.valor
+            print(f'Qtd {quantidade} - {produto.nome} - R$ {produto.valor:.2f}.....R$ {total_prod:.2f}')
             total_ped += total_prod
+        
         print(f'Valor Total..................R$ {total_ped:.2f}')
         print('-------------------------------------')
+
