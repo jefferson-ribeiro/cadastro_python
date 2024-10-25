@@ -59,3 +59,15 @@ def submit_pedido():
     pedido = Pedido(codigo_pedido, cliente, [(produto, quantidade)])
     pedidos.append(pedido)
     return f"Pedido cadastrado com sucesso! Cliente: {cliente.nome}, Produto: {produto.nome}, Quantidade: {quantidade}"
+
+@app.route('/show_clientes')
+def show_clientes():
+    return render_template('clientes.html', clientes=clientes)
+
+@app.route('/show_produtos')
+def show_produtos():
+    return render_template('produtos.html', produtos=produtos)
+
+@app.route('/show_pedidos')
+def show_pedidos():
+    return render_template('pedidos.html', pedidos=pedidos)

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos</title>
+</head>
+<body>
+    <h1>Pedidos Cadastrados</h1>
+    <ul>
+        {% for pedido in pedidos %}
+        <li>Pedido Nº: {{ pedido.codigo }} - Cliente: {{ pedido.cliente.nome }}
+            <ul>
+                {% for produto, quantidade in pedido.produtos %}
+                <li>{{ produto.nome }} - Quantidade: {{ quantidade }} - Valor Total: R$ {{ quantidade * produto.valor }}</li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="/">Voltar</a>
+</body>
+</html>
