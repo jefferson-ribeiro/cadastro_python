@@ -1,0 +1,89 @@
+/* styles.css */
+
+body {
+    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+    padding-top: 5px; /* Ajuste conforme necessário */
+}
+
+.container {
+    max-width: 500px;
+    margin-top: 5px;
+}
+
+/* Adicionando um novo container maior para as tabelas */
+.container-table {
+    max-width: 900px;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h2 {
+    color: #333;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.form-label {
+    color: #555;
+}
+
+.form-control {
+    border: 2px solid #ddd;
+    border-radius: 5px;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    transition: background-color 0.3s, border-color 0.3s;
+    margin-bottom: 10px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+/* Novos estilos para a tabela */
+.table {
+    background-color: #ffffff;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.table thead {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.table th, .table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    margin-bottom: 10px;
+}
+
+/* Estilos Responsivos para a Tabela */
+@media (max-width: 768px) {
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+

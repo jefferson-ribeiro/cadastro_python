@@ -1,5 +1,5 @@
 from app import app, db
-from flask import render_template, request
+from flask import redirect, render_template, request, flash, url_for
 from app.models import Cliente, Produto, Pedido
 
 clientes = []
@@ -22,27 +22,18 @@ def produto():
 def pedido():
     return render_template('pedido_form.html')
 
-# @app.route('/submit_cliente', methods=['POST'])
-# def submit_cliente():
-#     nome = request.form.get('name')
-#     telefone = request.form.get('telefone')
-#     cpf = request.form.get('cpf')
-#     email = request.form.get('email')
-#     codigo = len(clientes) + 1
-#     cliente = Cliente(codigo, nome, telefone, cpf, email)
-#     clientes.append(cliente)
-#     return f"Cadastrado com sucesso! Nome: {nome}, Telefone: {telefone}, CPF: {cpf}, Email: {email}"
 @app.route('/submit_cliente', methods=['POST'])
 def submit_cliente():
     nome = request.form.get('name')
     telefone = request.form.get('telefone')
     cpf = request.form.get('cpf')
     email = request.form.get('email')
+    
     cursor = db.cursor()
     cursor.execute("INSERT INTO clientes (nome, telefone, cpf, email) VALUES (%s, %s, %s, %s)",
                    (nome, telefone, cpf, email))
-    db.commit()    
-    return f"Cadastrado com sucesso! Nome: {nome}, Telefone: {telefone}, CPF: {cpf}, Email: {email}"
+    db.commit()
+    return redirect(url_for('cliente'))
 
 @app.route('/submit_produto', methods=['POST'])
 def submit_produto():
@@ -73,6 +64,9 @@ def submit_pedido():
 
 @app.route('/show_clientes')
 def show_clientes():
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM clientes")
+    clientes = cursor.fetchall()
     return render_template('clientes.html', clientes=clientes)
 
 @app.route('/show_produtos')
