@@ -24,7 +24,7 @@ def pedido():
 
 @app.route('/submit_cliente', methods=['POST'])
 def submit_cliente():
-    nome = request.form.get('name')
+    nome = request.form.get('nomeCompleto')
     telefone = request.form.get('telefone')
     cpf = request.form.get('cpf')
     email = request.form.get('email')
