@@ -37,13 +37,18 @@ def submit_cliente():
 
 @app.route('/submit_produto', methods=['POST'])
 def submit_produto():
-    nome = request.form.get('name')
+    nome = request.form.get('nome')
     descricao = request.form.get('descricao')
     valor = float(request.form.get('valor'))
-    codigo = len(produtos) + 1
-    produto = Produto(codigo, nome, descricao, valor)
-    produtos.append(produto)
-    return f"Produto cadastrado com sucesso! Nome: {nome}, Descrição: {descricao}, Valor: {valor}"
+    # codigo = len(produtos) + 1
+    # produto = Produto(codigo, nome, descricao, valor)
+    # produtos.append(produto)
+    # return f"Produto cadastrado com sucesso! Nome: {nome}, Descrição: {descricao}, Valor: {valor}"
+    cursor = db.cursor()
+    cursor.execute("INSERT INTO produtos (nome, descricao, valor) VALUES (%s, %s, %s)",
+                   (nome, descricao, valor))
+    db.commit()
+    return redirect(url_for('produto'))
 
 @app.route('/submit_pedido', methods=['POST'])
 def submit_pedido():
@@ -71,6 +76,9 @@ def show_clientes():
 
 @app.route('/show_produtos')
 def show_produtos():
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM produtos")
+    produtos = cursor.fetchall()
     return render_template('produtos.html', produtos=produtos)
 
 @app.route('/show_pedidos')

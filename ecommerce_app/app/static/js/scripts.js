@@ -30,3 +30,27 @@ document.querySelectorAll("a.nav-link").forEach((anchor) => {
       .scrollIntoView({ behavior: "smooth" });
   });
 });
+
+document.getElementById("pedidoForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const nome = document.getElementById("nome").value;
+  const email = document.getElementById("email").value;
+  const produto = document.getElementById("produto").value;
+  const mensagem = document.getElementById("mensagem").value;
+
+  // Aqui você pode adicionar a lógica para enviar o pedido
+  alert(
+    `Pedido recebido!\nNome: ${nome}\nEmail: ${email}\nProduto: ${produto}\nMensagem: ${mensagem}`
+  );
+  this.reset();
+});
+
+// Smooth scroll para links da navegação
+document.querySelectorAll("nav a").forEach((anchor) => {
+  anchor.addEventListener("click", function (e) {
+    e.preventDefault();
+    const targetId = this.getAttribute("href");
+    const targetSection = document.querySelector(targetId);
+    targetSection.scrollIntoView({ behavior: "smooth" });
+  });
+});

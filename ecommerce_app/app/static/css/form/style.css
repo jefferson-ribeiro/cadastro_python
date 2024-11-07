@@ -12,9 +12,16 @@
 	transform: translateY(-50%);
 }
 
-#booking {
+#booking_cli {
 	font-family: 'PT Sans', sans-serif;
-	background-image: url('../../assets/img/bg-masthead.jpg');
+	background-image: url('../../assets/img/img-cliente.jpg');
+	background-size: cover;
+	background-position: center;
+}
+
+#booking_prod {
+	font-family: 'PT Sans', sans-serif;
+	background-image: url('../../assets/img/img-products.jpg');
 	background-size: cover;
 	background-position: center;
 }

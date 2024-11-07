@@ -1,89 +1,83 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Shop Brasil</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Seu CSS personalizado -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <base href="." />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Shop Brasil</title>
+  <!-- Seu CSS personalizado -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index/style.css') }}">
 </head>
 
-<body id="page-top">
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
-        <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="#page-top">E-Shop Brasil</a>
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="#clientes">Clientes</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#produtos">Produtos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#pedidos">Pedidos</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <!-- Masthead -->
-    <header class="masthead">
-        <div class="container px-4 px-lg-5 h-100 d-flex align-items-center justify-content-center">
-            <div class="row gx-4 gx-lg-5 text-center w-100">
-                <div class="col-lg-8 mx-auto">
-                    <h1 class="text-white font-weight-bold">Bem-vindo ao E-Shop Brasil!</h1>
-                    <hr class="divider" />
-                </div>
-                <div class="col-lg-8 align-self-baseline">
-                    <p class="text-white-75 mb-5">A melhor plataforma para gerenciar seu negócio. Comece agora!</p>
-                </div>
-            </div>
-        </div>
-    </header>
-    <!-- Sections -->
-    <!-- Seção Clientes -->
-    <section id="clientes">
-        <div class="container">
-            <h2 class="text-center mt-0">Clientes</h2>
-            <hr class="divider" />
-            <div class="text-center">
-                <a href="/cliente" class="btn btn-primary mb-2">Cadastrar Cliente</a>
-                <a href="/show_clientes" class="btn btn-secondary">Mostrar Clientes</a>
-            </div>
-        </div>
-    </section>
+<body>
+  <nav>
+    <ul>
+      <li><a href="#cliente">Cliente</a></li>
+      <li><a href="#produto">Produto</a></li>
+      <li><a href="#pedido">Pedido</a></li>
+    </ul>
+  </nav>
 
-    <!-- Seção Produtos -->
-    <section id="produtos">
-        <div class="container">
-            <h2 class="text-center mt-0">Produtos</h2>
-            <hr class="divider" />
-            <div class="text-center">
-                <a href="/produto" class="btn btn-primary mb-2">Cadastrar Produto</a>
-                <a href="/show_produtos" class="btn btn-secondary">Mostrar Produtos</a>
-            </div>
-        </div>
-    </section>
+  <section id="cliente">
+    <div class="container">
+      <h2>Clientes</h2>
+      <div class="card">
+        <h3>Gerenciar clientes</h3>
+        <p>Mantenha um registro detalhado de todos os seus clientes.</p>
+        <p>Comece a gerenciar seus clientes de maneira eficiente agora mesmo!</p>
+      </div>
+      <div class="text-center">
+        <a href="/cliente" class="btn btn-primary mb-2">Cadastrar Cliente</a>
+        <a href="/show_clientes" class="btn btn-secondary">Mostrar Clientes</a>
+      </div>
+    </div>
+    </div>
+  </section>
 
-    <!-- Seção Pedidos -->
-    <section id="pedidos">
-        <div class="container">
-            <h2 class="text-center mt-0">Pedidos</h2>
-            <hr class="divider" />
-            <div class="text-center">
-                <a href="/pedido" class="btn btn-primary mb-2">Cadastrar Pedido</a>
-                <a href="/show_pedidos" class="btn btn-secondary">Mostrar Pedidos</a>
-            </div>
-        </div>
-    </section>
+  <section id="produto">
+    <div class="container">
+      <h2>Nossos Produtos</h2>
+      <div class="card">
+        <h3>Gerenciar produtos</h3>
+        <p>Cadastre novos produtos de forma rápida e prática.</p>
+        <p>Consulte os detalhades dos produtos e suas características.</p>
+      </div>
+      <div class="text-center">
+        <a href="/produto" class="btn btn-primary mb-2">Cadastrar Produto</a>
+        <a href="/show_produtos" class="btn btn-secondary">Mostrar Produtos</a>
+      </div>
+  </section>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Seu JS personalizado -->
-    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+  <section id="pedido">
+    <div class="container">
+      <h2>Faça seu Pedido</h2>
+      <div class="card">
+        <form id="pedidoForm">
+          <div class="form-group">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+          </div>
+          <div class="form-group">
+            <label for="produto">Produto:</label>
+            <select id="produto" required>
+              <option value="">Selecione um produto</option>
+              <option value="premium">Produto Premium</option>
+              <option value="standard">Produto Standard</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="mensagem">Mensagem:</label>
+            <textarea id="mensagem" rows="4"></textarea>
+          </div>
+          <button type="submit">Enviar Pedido</button>
+        </form>
+      </div>
+    </div>
+  </section>
 </body>
 
 </html>
