@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <!-- Seu CSS personalizado -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
+
 <body>
     <div class="container-table mt-5">
         <h2 class="text-center mb-4">Lista de Clientes</h2>
@@ -16,7 +18,7 @@
             <table class="table table-bordered table-hover">
                 <thead class="thead-dark">
                     <tr>
-                        <th>ID</th>
+                        <th>Código</th>
                         <th>Nome</th>
                         <th>Telefone</th>
                         <th>CPF</th>
@@ -26,15 +28,15 @@
                 <tbody>
                     {% for cliente in clientes %}
                     <tr>
-                        <td>{{ cliente[0] }}</td>
-                        <td>{{ cliente[1] }}</td>
-                        <td>{{ cliente[2] }}</td>
-                        <td>{{ cliente[3] }}</td>
-                        <td>{{ cliente[4] }}</td>
+                        <td>{{ cliente.codigo }}</td>
+                        <td>{{ cliente.nome }}</td>
+                        <td>{{ cliente.telefone }}</td>
+                        <td>{{ cliente.cpf }}</td>
+                        <td>{{ cliente.email }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
-    <div class="text-center mt-4">
-    <div class="text-center mt-4"> <a href="/" class="btn btn-secondary">Voltar para Início</a> </div>
+        <div class="text-center mt-4">
+            <div class="text-center mt-4"> <a href="/" class="btn btn-secondary">Voltar para Início</a> </div>

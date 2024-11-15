@@ -25,10 +25,10 @@
                 <tbody>
                     {% for produto in produtos %}
                     <tr>
-                        <td>{{ produto[0] }}</td>
-                        <td>{{ produto[1] }}</td>
-                        <td>{{ produto[2] }}</td>
-                        <td>{{ produto[3] }}</td>
+                        <td>{{ produto.codigo }}</td>
+                        <td>{{ produto.nome }}</td>
+                        <td>{{ produto.descricao }}</td>
+                        <td>{{ produto.valor }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>

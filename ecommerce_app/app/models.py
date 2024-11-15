@@ -1,14 +1,29 @@
-class Cliente:
-    def __init__(self, codigo, nome, telefone, cpf, email):
-        self.codigo = codigo
+from app import db
+
+class Cliente(db.Model):
+    __tablename__ = 'clientes'
+
+    codigo = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    nome = db.Column(db.String(100), nullable=False)
+    telefone = db.Column(db.String(20), nullable=False)
+    cpf = db.Column(db.String(11), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+
+    def __init__(self, nome, telefone, cpf, email):
         self.nome = nome
         self.telefone = telefone
         self.cpf = cpf
         self.email = email
 
-class Produto:
-    def __init__(self, codigo, nome, descricao, valor):
-        self.codigo = codigo
+class Produto(db.Model):
+    __tablename__ = 'produtos'
+
+    codigo = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    nome = db.Column(db.String(255), nullable=True)
+    descricao = db.Column(db.String(255), nullable=True)
+    valor = db.Column(db.Float, nullable=True)
+
+    def __init__(self, nome, descricao, valor):
         self.nome = nome
         self.descricao = descricao
         self.valor = valor
