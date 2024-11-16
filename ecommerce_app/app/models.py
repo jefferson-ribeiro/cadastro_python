@@ -27,16 +27,19 @@ class Produto(db.Model):
         self.nome = nome
         self.descricao = descricao
         self.valor = valor
+from app import db
 
-class Pedido:
-    def __init__(self, codigo, cliente, produtos):
-        self.codigo = codigo
-        self.cliente = cliente
-        self.produtos = produtos  # Lista de tuplas (produto, quantidade)
-        self.valor_total = self.calcular_valor_total()
+class Pedido(db.Model):
+    __tablename__ = 'pedidos'
 
-    def calcular_valor_total(self):
-        total = 0
-        for produto, quantidade in self.produtos:
-            total += produto.valor * quantidade
-        return total
+    codigo = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    cliente_id = db.Column(db.Integer, db.ForeignKey('clientes.codigo'), nullable=False)
+    produto_id = db.Column(db.Integer, db.ForeignKey('produtos.codigo'), nullable=False)
+    quantidade = db.Column(db.Integer, nullable=False)
+    valor = db.Column(db.Float, nullable=False) # Adiciona o campo valor
+
+    def __init__(self, cliente_id, produto_id, quantidade, valor):
+        self.cliente_id = cliente_id
+        self.produto_id = produto_id
+        self.quantidade = quantidade
+        self.valor = valor

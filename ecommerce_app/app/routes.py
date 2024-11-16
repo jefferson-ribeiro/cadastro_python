@@ -1,14 +1,12 @@
 from app import app, db
-from flask import redirect, render_template, request, flash, url_for
+from flask import jsonify, redirect, render_template, request, flash, url_for
 from app.models import Cliente, Produto, Pedido
-
-# clientes = []
-# produtos = []
-# pedidos = []
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    clientes = Cliente.query.all()
+    produtos = Produto.query.all()
+    return render_template('index.html', clientes=clientes, produtos=produtos)
 
 @app.route('/cliente')
 def cliente():
@@ -73,22 +71,26 @@ def submit_pedido():
     produto_id = int(request.form.get('produto'))
     quantidade = int(request.form.get('quantidade'))
 
+    # Buscar o cliente e o produto no banco de dados
     cliente = Cliente.query.get(cliente_id)
     produto = Produto.query.get(produto_id)
 
     if not cliente or not produto:
         flash("Cliente ou Produto não encontrado.")
-        return redirect(url_for('pedido'))
+        return redirect(url_for('home'))
 
-    novo_pedido = Pedido(cliente_id=cliente_id)
+    # Calcular o valor total do pedido
+    valor_total = quantidade * produto.valor
+
+    # Criar o novo pedido com o valor total
+    novo_pedido = Pedido(cliente_id=cliente_id, produto_id=produto_id, quantidade=quantidade, valor=valor_total)
+
+    # Adicionar e confirmar no banco de dados
     db.session.add(novo_pedido)
     db.session.commit()
 
-    novo_pedido.produtos.append((produto, quantidade))
-    db.session.commit()
-
     flash("Pedido cadastrado com sucesso!")
-    return redirect(url_for('pedido'))
+    return redirect(url_for('home'))
 
 @app.route('/show_clientes')
 def show_clientes():
@@ -103,4 +105,29 @@ def show_produtos():
 @app.route('/show_pedidos')
 def show_pedidos():
     pedidos = Pedido.query.all()
-    return render_template('pedidos.html', pedidos=pedidos)
+    pedidos_completos = []
+
+    for pedido in pedidos:
+        cliente = Cliente.query.get(pedido.cliente_id)
+        produto = Produto.query.get(pedido.produto_id)
+        pedidos_completos.append({
+            'codigo': pedido.codigo,
+            'cliente': cliente.nome,
+            'produto': produto.nome,
+            'quantidade': pedido.quantidade,
+            'valor_unitario': produto.valor,
+            'valor_total': pedido.valor
+        })    
+    return render_template('pedidos.html', pedidos=pedidos_completos)
+
+@app.route('/clientes')
+def get_clientes():
+    clientes = Cliente.query.all()
+    clientes_data = [{'codigo': cliente.codigo, 'nome': cliente.nome} for cliente in clientes]
+    return jsonify(clientes_data)
+
+@app.route('/produtos')
+def get_produtos():
+    produtos = Produto.query.all()
+    produtos_data = [{'codigo': produto.codigo, 'nome': produto.nome} for produto in produtos]
+    return jsonify(produtos_data)
