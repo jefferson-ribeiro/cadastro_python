@@ -20,10 +20,11 @@
   </nav>
   <section id="home"> <!-- Nova seção Home -->
     <div class="container">
-      <h2>Bem-vindo ao E-Shop Brasil</h2>
-      <p>Aqui você encontra os melhores produtos e serviços para atender todas as suas necessidades. Explore nossas
-        seções para cadastrar clientes, gerenciar produtos e fazer pedidos.</p>
-      <p>Navegue pelo nosso site para descobrir mais!</p>
+      <h1>Bem-vindo ao E-Shop Brasil</h1>
+      <div class="card">
+        <p>Aqui você encontra os melhores produtos e serviços para atender todas as suas necessidades. Explore nossas seções para cadastrar clientes, gerenciar produtos e fazer pedidos.</p>
+        <p>Navegue pelo nosso site para descobrir mais!</p>
+      </div>
     </div>
   </section>
   <section id="cliente">
@@ -35,8 +36,8 @@
         <p>Comece a gerenciar seus clientes de maneira eficiente agora mesmo!</p>
       </div>
       <div class="text-center">
-        <a href="/cliente" class="btn btn-primary mb-2">Cadastrar Cliente</a>
-        <a href="/show_clientes" class="btn btn-secondary">Mostrar Clientes</a>
+        <a href="/cliente" class="btn-padrao">Cadastrar Cliente</a>
+        <a href="/show_clientes" class="btn-padrao">Mostrar Clientes</a>
       </div>
     </div>
     </div>
@@ -44,15 +45,15 @@
 
   <section id="produto">
     <div class="container">
-      <h2>Nossos Produtos</h2>
+      <h2>Produtos</h2>
       <div class="card">
         <h3>Gerenciar produtos</h3>
         <p>Cadastre novos produtos de forma rápida e prática.</p>
         <p>Consulte os detalhades dos produtos e suas características.</p>
       </div>
       <div class="text-center">
-        <a href="/produto" class="btn btn-primary mb-2">Cadastrar Produto</a>
-        <a href="/show_produtos" class="btn btn-secondary">Mostrar Produtos</a>
+        <a href="/produto" class="btn-padrao">Cadastrar Produto</a>
+        <a href="/show_produtos" class="btn-padrao">Mostrar Produtos</a>
       </div>
     </div>
   </section>
@@ -67,7 +68,7 @@
             <select id="cliente_search" name="cliente" required>
               <option value="" selected disabled>Selecione um cliente</option>
               {% for cliente in clientes %}
-              <option value="{{ cliente.codigo }}">{{ cliente.nome }}</option>
+              <option value="{{ cliente.codigo }}">{{ cliente.codigo }} - {{ cliente.nome }}</option>
               {% endfor %}
             </select>
           </div>
@@ -76,19 +77,21 @@
             <select id="produto_search" name="produto" required>
               <option value="" selected disabled>Selecione um produto</option>
               {% for produto in produtos %}
-              <option value="{{ produto.codigo }}">{{ produto.nome }}</option>
+              <option value="{{ produto.codigo }}">{{ produto.codigo }} - {{ produto.nome }}</option>
               {% endfor %}
             </select>
           </div>
           <div class="form-group">
             <label for="quantidade">Quantidade:</label>
-            <input type="number" id="quantidade" name="quantidade" value="0" required>
+            <input type="number" id="quantidade" name="quantidade" required>
           </div>
           <button type="submit">Enviar Pedido</button>
-          <a href="/show_pedidos" class="btn btn-secondary">Consultar Pedidos</a>
+          <a href="/show_pedidos" class="btn-padrao">Consultar Pedidos</a>
         </form>
       </div>
     </div>
   </section>
+
 </body>
+
 </html>

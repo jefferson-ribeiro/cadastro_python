@@ -67,11 +67,18 @@ def submit_produto():
 
 @app.route('/submit_pedido', methods=['POST'])
 def submit_pedido():
-    cliente_id = int(request.form.get('cliente'))
-    produto_id = int(request.form.get('produto'))
-    quantidade = int(request.form.get('quantidade'))
+    cliente_id = request.form.get('cliente')
+    produto_id = request.form.get('produto')
+    quantidade = request.form.get('quantidade')
 
-    # Buscar o cliente e o produto no banco de dados
+    if not cliente_id or not produto_id or not quantidade:
+        flash("Todos os campos são obrigatórios.")
+        return redirect(url_for('home'))
+
+    cliente_id = int(cliente_id)
+    produto_id = int(produto_id)
+    quantidade = int(quantidade)
+
     cliente = Cliente.query.get(cliente_id)
     produto = Produto.query.get(produto_id)
 
@@ -79,17 +86,27 @@ def submit_pedido():
         flash("Cliente ou Produto não encontrado.")
         return redirect(url_for('home'))
 
-    # Calcular o valor total do pedido
     valor_total = quantidade * produto.valor
-
-    # Criar o novo pedido com o valor total
     novo_pedido = Pedido(cliente_id=cliente_id, produto_id=produto_id, quantidade=quantidade, valor=valor_total)
-
-    # Adicionar e confirmar no banco de dados
     db.session.add(novo_pedido)
     db.session.commit()
 
     flash("Pedido cadastrado com sucesso!")
+    return redirect(url_for('home'))
+
+    # Calcular o valor total do pedido
+    valor_total = quantidade * produto.valor
+
+    # Verificações de depuração
+    print(f"Novo Pedido: Cliente ID {cliente_id}, Produto ID {produto_id}, Quantidade {quantidade}, Valor Total {valor_total}")
+
+    # Criar o novo pedido com o valor total
+    novo_pedido = Pedido(cliente_id=cliente_id, produto_id=produto_id, quantidade=quantidade, valor=valor_total)
+    db.session.add(novo_pedido)
+    db.session.commit()
+
+    flash("Pedido cadastrado com sucesso!")
+    print("Pedido cadastrado com sucesso!")
     return redirect(url_for('home'))
 
 @app.route('/show_clientes')
